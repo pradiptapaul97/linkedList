@@ -160,30 +160,21 @@ class SinglyLinkedList {
         
     }
 
-    reverse(index)
+    reverse()
     {
-        if(index == 0)
-        {
-            return this.shift()
-        }
-        if(index == this.length)
-        {
-            return this.pop()
-        }
-        if(this.length <= index || index < 0)
-        {
-            return false
-        }
+        let temp = this.head;
+        this.head = this.tail;
+        this.tail = temp;
 
-        let before = this.get(index - 1);
-        let temp = before.next;
+        let prev = null;
+        let next = null;
 
-        before.next = temp.next;
-        temp.next = null;
-
-        this.length--
-        return temp
-        
+        for (let index = 0; index < this.length; index++) {
+            next = temp.next;
+            temp.next = prev;
+            prev = temp;
+            temp = next;
+        }
     }
 }
 
@@ -194,7 +185,7 @@ first.push(40);
 first.push(50);
 first.push(60);
 
-let result = first.remove(2)
+first.reverse();
 
 
 var http = require('http');
@@ -202,8 +193,10 @@ var express = require('express');
 var app = express();
 
 app.get('/', (req, res) => {
-    res.send({first,result});
- });
+    res.send({first});
+});
 
 var httpServer = http.createServer(app);
-httpServer.listen(3000);
+httpServer.listen(3000,(()=>{
+    console.log('http://localhost:3000');
+}));
